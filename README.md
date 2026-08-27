@@ -3,7 +3,7 @@
 Uma moeda, uma sala branca infinita e um botão. Sem servidor, sem build, sem
 dependência: HTML, CSS e JavaScript.
 
-**[Ver ao vivo →](#)** &nbsp;·&nbsp; substitua por sua URL do GitHub Pages
+**[[Ver ao vivo →](https://maycristina.github.io/cara-ou-coroa/)](#)** &nbsp;·&nbsp;  
 
 ---
 
