@@ -127,5 +127,5 @@ Para publicar: GitHub Pages apontando para a branch principal.
 
 Código sob licença MIT — ver [`LICENSE`](LICENSE).
 
-As imagens em `img/` são **experimentais, geradas por IA**. Não são fotografias
-autorais. Se for reaproveitar o código, use suas próprias imagens.
+As imagens em `img/` são **experimentais, geradas por IA**. 
+Caso tenha interesse em reaproveitar o código, use suas próprias imagens.
