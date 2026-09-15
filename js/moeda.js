@@ -14,7 +14,9 @@
   var $ = function (id) { return document.getElementById(id); };
   var sala = $('sala'), rig = $('rig'), arco = $('arco'), moeda = $('moeda'),
     canto = $('canto'), sombra = $('sombra'), btn = $('jogar'),
-    elDica = $('dica'), anuncio = $('anuncio');
+    elDica = $('dica'), anuncio = $('anuncio'), btnSom = $('somToggle');
+
+  var Som = window.Som || { lancar: function () {}, pouso: function () {}, alternar: function () { return true; }, estaMudo: function () { return true; } };
 
   var reduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -54,7 +56,7 @@
   }
 
   var fase = 'ocioso';
-  var t0 = 0, resultado = null, giroFinal = 0, apice = 0;
+  var t0 = 0, resultado = null, giroFinal = 0, apice = 0, pousoTocado = false;
   var placar = { cara: 0, coroa: 0 };
 
   function trava(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
@@ -117,12 +119,14 @@
     var voltas = 5 + Math.floor(Math.random() * 3);
     giroFinal = voltas * 360 + (resultado === 'cara' ? 0 : 180);
     apice = RAIO * (2.6 + Math.random() * 0.6);
+    pousoTocado = false;
 
     btn.disabled = true;
     elDica.style.opacity = '0';
     anuncio.textContent = 'Moeda lançada.';
+    Som.lancar();
 
-    if (reduzido) { pousar(); concluir(); return; }
+    if (reduzido) { pousar(); Som.pouso(); concluir(); return; }
 
     fase = 'animando';
     t0 = performance.now() / 1000;
@@ -186,6 +190,7 @@
       alturaAcimaDoChao = CHAO - yTotal;
 
     } else if (t < TOTAL) {
+      if (!pousoTocado) { pousoTocado = true; Som.pouso(); }
       var u3 = (t - RECUO - VOO) / POUSO;
       var quique = Math.abs(Math.sin(u3 * Math.PI * 2.4)) * (RAIO * 0.16) * Math.pow(1 - u3, 2);
       arco.style.transform = 'translateY(' + (CHAO - quique).toFixed(1) + 'px) translateZ(0px)';
@@ -203,9 +208,24 @@
     aplicarSombra(alturaAcimaDoChao);
   }
 
+  function atualizarBtnSom() {
+    if (!btnSom) return;
+    var mudo = Som.estaMudo();
+    btnSom.setAttribute('aria-pressed', mudo ? 'true' : 'false');
+    btnSom.setAttribute('aria-label', mudo ? 'Ativar som' : 'Silenciar');
+  }
+
   btn.addEventListener('click', jogar);
+  if (btnSom) {
+    btnSom.addEventListener('click', function () {
+      Som.alternar();
+      atualizarBtnSom();
+    });
+    atualizarBtnSom();
+  }
   window.addEventListener('keydown', function (e) {
-    if ((e.code === 'Space' || e.code === 'Enter') && document.activeElement !== btn) {
+    if ((e.code === 'Space' || e.code === 'Enter') &&
+        document.activeElement !== btn && document.activeElement !== btnSom) {
       e.preventDefault();
       jogar();
     }
