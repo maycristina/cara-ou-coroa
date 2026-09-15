@@ -112,6 +112,18 @@ Também tratados: `100dvh` (a barra de endereço do celular muda `100vh`),
 44 px, hover neutralizado onde o ponteiro é grosso, e remedição no `resize` e no
 `orientationchange`.
 
+## Som
+
+Dois efeitos — o lançamento e o pouso — sintetizados na hora com a Web Audio
+API, em `js/som.js`. Nenhum arquivo de áudio: ruído branco passado por
+filtros (um sopro que sobe de frequência no lançamento; um impacto surdo
+mais um tinido agudo no pouso), do mesmo jeito sem-dependência do resto do
+projeto.
+
+Fica silenciado com o botão de alto-falante no canto superior direito
+(ou tecla Espaço/Enter com foco nele). A preferência é lembrada via
+`localStorage` — não pergunta de novo na próxima visita.
+
 ## Acessibilidade
 
 - **O resultado não aparece escrito na tela** — quem enxerga lê na própria moeda.
