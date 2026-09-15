@@ -144,11 +144,78 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+.direita {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 3vw, 20px);
+}
+
 .placar {
   display: flex;
   align-items: center;
   gap: clamp(14px, 3vw, 22px);
   color: var(--apagado);
+}
+
+.som {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--apagado);
+  text-transform: none;
+  letter-spacing: normal;
+  transition: color .25s ease, background .25s ease, transform .2s ease;
+}
+
+/* especificidade de #id, de propósito: precisa vencer as regras genéricas
+   de button:hover/:active mais abaixo, que incluem o seletor de elemento
+   e por isso pesam mais que uma classe sozinha. */
+#somToggle:hover {
+  background: transparent;
+  color: var(--tinta);
+}
+
+#somToggle:active {
+  background: transparent;
+  color: var(--tinta);
+  transform: scale(.9);
+}
+
+#somToggle:focus-visible {
+  outline: 2px solid var(--tinta);
+  outline-offset: 2px;
+}
+
+.som .mudox {
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.som[aria-pressed="true"] .onda {
+  opacity: 0;
+}
+
+.som[aria-pressed="true"] .mudox {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  #somToggle:hover {
+    color: var(--apagado);
+  }
+
+  #somToggle:active {
+    color: var(--tinta);
+  }
 }
 
 .marca {
